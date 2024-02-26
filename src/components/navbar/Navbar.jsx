@@ -4,7 +4,7 @@ import "./navbar.css"
 
 export default function MainNavbar() {
   return (
-    <Navbar expand="lg" className="my-nav">
+    <Navbar expand="lg" className="my-nav mb-3">
       <Container>
         <Link to="/">
           <Navbar.Brand href="#home">That Fashion Tale</Navbar.Brand>

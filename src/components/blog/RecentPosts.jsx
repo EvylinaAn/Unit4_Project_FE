@@ -2,8 +2,8 @@ import { usePosts } from "../../context/PostContext";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-export default function FashionIndex() {
-  const { posts, fetchPosts, fetchCategories } = usePosts();
+export default function RecentIndex() {
+  const { posts, fetchPosts, fetchCategories, } = usePosts();
 
   useEffect(() => {
     fetchPosts();
@@ -11,14 +11,13 @@ export default function FashionIndex() {
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const fashionPosts = posts
-  .filter(post => post.categories && post.categories.includes('Fashion and Lifestyle'))
-  .map(post => post);
+  const recentPosts = [...posts].sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 3);
+
 
   return (
     <>
-      <h1>Fashion</h1>
-      {fashionPosts.map((post, index) => (
+      <h1>Recent Posts</h1>
+      {recentPosts.map((post, index) => (
         <div key={index}>
         <h2>
           <Link to={`/posts/${post.id}`}>

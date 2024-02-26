@@ -1,15 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+// import './interceptors/axios';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router } from "react-router-dom";
+import { UsersProvider } from "./context/UserContext";
+import { PostsProvider } from './context/PostContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Router>
-      <App />
-    </Router>
+    <UsersProvider>
+      <PostsProvider>
+        <Router>
+          <App />
+        </Router>
+      </PostsProvider>
+    </UsersProvider>
   </React.StrictMode>
 );
 
