@@ -1,57 +1,74 @@
 // Import the react JS packages
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+// import { useUser } from "./context/UserContext";
+import { useNavigate } from "react-router-dom";
 // Define the Login function.
 export const Login = () => {
+  // const { username, setUsername, password, setPassword, submit } = useUser()
+  const navigate = useNavigate()
+
+  const backendURL = process.env.REACT_APP_BACKEND_URL;
+
+  const [user, setUser] = useState({
+    email: "",
+    username: "",
+    // url: "",
+  });
+
+  console.log(user)
+  const fetchUser = async () => {
+    try {
+      const url = `${backendURL}/api/current_user/`;
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(response.data);
+      setUser(response.data);
+      localStorage.setItem("current_user", response.data.id);
+      localStorage.setItem("current_username", response.data.username);
+      // window.location.href = "/";
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  // const [currUser, setCurrUser] = useState({})
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // Create the submit method.
+
   const submit = async (e) => {
     e.preventDefault();
     const user = {
       username: username,
       password: password,
     };
-    // Create the POST requuest
-    const { data } = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/token/`, user,
-    {
-      headers: { "Content-Type": "application/json" },
-    },
-    {
-        withCredentials: true
-    },
+    // Create the POST request
+    const { data } = await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}/token/`,
+      user,
+      {
+        headers: { "Content-Type": "application/json" },
+      },
+      {
+        withCredentials: true,
+      }
     );
-console.log(data)
-    // Initialize the access & refresh token in localstorage.
-    // localStorage.clear();
+    localStorage.clear();
     localStorage.setItem("access_token", data.access);
-    // localStorage.setItem("refresh_token", data.refresh);
-    axios.defaults.headers.common["Authorization"] = `Bearer ${data["access"]}`;
-    await fetchAdditionalData();
-
-    window.location.href = "/";
+    console.log(data);
+    localStorage.setItem("refresh_token", data.refresh);
+    axios.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${localStorage.getItem("access_token")}`;
+    console.log("User:", user);
+    fetchUser();
+    navigate('/')
   };
 
-  const fetchAdditionalData = async () => {
-    try {
-      // Fetch additional data after successful login
-      const response = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URL}/your-api-endpoint`,
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("access_token")}` },
-        }
-      );
-      console.log("Additional data:", response.data);
-      // Store or process the fetched data as needed
-    } catch (error) {
-      console.error("Error fetching additional data:", error);
-      // Handle error while fetching additional data
-    }
-  };
-
-  useEffect(()=> {
-    fetchAdditionalData()
-  })
   return (
     <div className="Auth-form-container">
       <form className="Auth-form" onSubmit={submit}>

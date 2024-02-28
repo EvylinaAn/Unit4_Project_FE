@@ -16,3 +16,8 @@ ul {
   list-style-type: none;
   padding: 0 !important;
 }
+
+.blogImg {
+  max-height: 30vmin;
+  max-width: 30vmin;
+}

@@ -1,118 +1,109 @@
-// export default function EditCommentModal() {
-//   return (
-//     <div class="modal" tabindex="-1" role="dialog">
-//       <div class="modal-dialog" role="document">
-//         <div class="modal-content">
-//           <div class="modal-header">
-//             <h5 class="modal-title">Modal title</h5>
-//             <button
-//               type="button"
-//               class="close"
-//               data-dismiss="modal"
-//               aria-label="Close"
-//             >
-//               <span aria-hidden="true">&times;</span>
-//             </button>
-//           </div>
-//           <div class="modal-body">
-//             <p>Modal body text goes here.</p>
-//           </div>
-//           <div class="modal-footer">
-//             <button type="button" class="btn btn-primary">
-//               Save changes
-//             </button>
-//             <button
-//               type="button"
-//               class="btn btn-secondary"
-//               data-dismiss="modal"
-//             >
-//               Close
-//             </button>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-
-
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { Modal, Button, Form } from "react-bootstrap";
 import axios from "axios";
 
-export default function EditCommentModal({ commentId, onClose }) {
-  const [comment, setComment] = useState("");
-  const [loading, setLoading] = useState(true);
+export default function EditCommentModal({
+  showModal,
+  handleClose,
+  username,
+  allComments,
+  selectedCommentId,
+  setAllComments,
+  fetchComments,
+  postId,
+  current_user
+}) {
+  // const [comment, setComment] = useState("");
+  // const [loading, setLoading] = useState(true);
+  const [editedComment, setEditedComment] = useState("");
 
-  useEffect(() => {
-    async function fetchComment() {
-      try {
-        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/comments/${commentId}/`);
-        setComment(response.data.comment);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching comment:", error);
-        setLoading(false);
-      }
-    }
+  const commentRef = useRef();
 
-    fetchComment();
-  }, [commentId]);
-
-  const handleCommentChange = (e) => {
-    setComment(e.target.value);
-  };
-
-  const handleSaveChanges = async () => {
+  async function populateFormFields() {
     try {
-      await axios.put(
-        `${process.env.REACT_APP_BACKEND_URL}/comments/${commentId}/`,
-        { comment: comment },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-            "Content-Type": "application/json",
-          },
-        }
+      const commentToEdit = allComments.find(
+        (comment) => comment.id === selectedCommentId
       );
-      onClose();
+      console.log(commentToEdit);
+      if (commentToEdit) {
+        commentRef.current.value = commentToEdit.comment;
+      }
     } catch (error) {
-      console.error("Error updating comment:", error);
+      console.error(error);
     }
-  };
-
-  if (loading) {
-    return <div>Loading...</div>;
   }
 
+  function handleChangeCreate(value) {
+    setEditedComment(value);
+  }
+
+  // console.log(selectedCommentId)
+
+  async function editComment(selectedCommentId, updatedComment) {
+    try {
+      const commentData = {
+        comment: editedComment,
+        post: postId,
+        owner: current_user,
+      };
+      await axios.put(
+        `${process.env.REACT_APP_BACKEND_URL}/comments/${selectedCommentId}/`, commentData
+      );
+      fetchComments();
+    } catch (e) {
+      console.log("Error editing schedule", e);
+    }
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      await editComment(selectedCommentId, editedComment);
+      handleClose();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    if (showModal) {
+      populateFormFields();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showModal]);
+
   return (
-    <div className="modal" tabIndex="-1" role="dialog">
-      <div className="modal-dialog" role="document">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title">Edit Comment</h5>
-            <button type="button" className="close" onClick={onClose}>
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div className="modal-body">
-            <textarea
-              className="form-control"
-              rows="3"
-              value={comment}
-              onChange={handleCommentChange}
-            ></textarea>
-          </div>
-          <div className="modal-footer">
-            <button type="button" className="btn btn-primary" onClick={handleSaveChanges}>
-              Save changes
-            </button>
-            <button type="button" className="btn btn-secondary" onClick={onClose}>
-              Close
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Modal show={showModal} onHide={handleClose}>
+      <Form>
+        <Modal.Header closeButton>
+          <Modal.Title>{username}</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body style={{ padding: "0" }}>
+          <Form.Group className="mb-3" controlId="description">
+            <Form.Control
+              type="text"
+              required
+              ref={commentRef}
+              value={editedComment}
+              onChange={(e) => handleChangeCreate(e.target.value)}
+            />
+          </Form.Group>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button type="submit" variant="success" onClick={handleSubmit}>
+            Save Edit
+          </Button>
+          <Button
+            variant="success"
+            onClick={() => {
+              handleClose();
+            }}
+          >
+            Close
+          </Button>
+        </Modal.Footer>
+      </Form>
+    </Modal>
   );
 }

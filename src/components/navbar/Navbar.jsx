@@ -1,14 +1,20 @@
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { Link } from "react-router-dom"
 import "./navbar.css"
+import { useEffect, useState } from 'react';
 
 export default function MainNavbar() {
+  const [isAuth, setIsAuth] = useState(false)
+
+  useEffect(() => {
+    if (localStorage.getItem('access_token') !== null) 
+      setIsAuth(true)
+  }, [isAuth])
+
   return (
     <Navbar expand="lg" className="my-nav mb-3">
       <Container>
-        <Link to="/">
-          <Navbar.Brand href="#home">That Fashion Tale</Navbar.Brand>
-        </Link>
+        <Navbar.Brand href="/">That Fashion Tale</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="navbarLinks">
@@ -26,6 +32,16 @@ export default function MainNavbar() {
             </NavDropdown>
             <Nav.Link style={{ paddingLeft: '2vmin'}} href="/about">About</Nav.Link>
           </Nav>
+          <Nav>
+          {isAuth ? (
+            <Nav.Link href="/logout">Logout</Nav.Link>
+          ) : (
+            <>
+              <Nav.Link href="/login">Login</Nav.Link>
+              <Nav.Link href="/signup">SignUp</Nav.Link>
+            </>
+          )} 
+        </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>

@@ -9,7 +9,7 @@ export function usePosts() {
 
 export function PostsProvider({ children }) {
   const backendURL = process.env.REACT_APP_BACKEND_URL;
-  // const { postId } = useParams(); 
+  // const { postId } = useParams();
 
   const [posts, setPosts] = useState([
     {
@@ -18,43 +18,60 @@ export function PostsProvider({ children }) {
     },
   ]);
 
-  const [comments, setComments] = useState([]);
+  const [featuredImg, setFeaturedImg] = useState([{
+    url: "",
+  }])
 
+  const [comments, setComments] = useState([]);
+  const [newPostComment, setPostComment] = useState(false);
 
   const [singlePost, setSinglePost] = useState({
-    title : '',
-    content : ''
+    title: "",
+    content: "",
+    url: "",
   });
 
   const [category, setCategory] = useState([
     {
-        category: ""
-    }
-  ])
+      category: "",
+    },
+  ]);
 
   const fetchPosts = async () => {
     try {
       const response = await axios.get(`${backendURL}/posts`, {
         headers: {
-          // Authorization: `Basic ${btoa("tester:test")}`,
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          // Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           "Content-Type": "application/json",
         },
       });
+
       const result = response.data;
+      // console.log(result)
       setPosts(result);
     } catch (e) {
       console.error(e);
     }
   };
 
+  const fetchFeaturedImage = async () => {
+    try {
+      const response = await axios.get(`${backendURL}/featuredPhoto`, {
+        headers: {
+          "Content-Type": "application/json",
+        }
+      })
+      const result = response.data
+      console.log(result)
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
   const fetchSinglePost = async (postId) => {
     try {
       const response = await axios.get(`${backendURL}/posts/${postId}`, {
         headers: {
-          // Authorization: `Basic ${btoa("tester:test")}`,
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           "Content-Type": "application/json",
         },
       });
@@ -64,7 +81,6 @@ export function PostsProvider({ children }) {
       console.error(e);
     }
   };
-    
 
   const fetchComments = async (postId) => {
     try {
@@ -73,26 +89,21 @@ export function PostsProvider({ children }) {
           post: postId,
         },
         headers: {
-          // Authorization: `Basic ${btoa("tester:test")}`,
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          // Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           "Content-Type": "application/json",
         },
       });
-      // console.log(response)
-      setComments(response.data);
-      // console.log(comments)
+      return response.data;
     } catch (error) {
       console.error("Error fetching comments:", error);
     }
   };
 
-
   const fetchCategories = async () => {
     try {
       const response = await axios.get(`${backendURL}/categories`, {
         headers: {
-          // Authorization: `Basic ${btoa("tester:test")}`,
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          // Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           "Content-Type": "application/json",
         },
       });
@@ -102,7 +113,6 @@ export function PostsProvider({ children }) {
       console.error(e);
     }
   };
-  
 
   return (
     <PostContext.Provider
@@ -118,6 +128,8 @@ export function PostsProvider({ children }) {
         comments,
         setComments,
         fetchComments,
+        newPostComment,
+        setPostComment,
       }}
     >
       {children}

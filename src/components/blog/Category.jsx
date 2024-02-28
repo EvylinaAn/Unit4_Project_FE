@@ -11,7 +11,7 @@ export default function Category() {
   }, []);
 
   // const allPosts = posts.map(post => post.title)
-
+// console.log(posts)
   return (
     <>
       <h1>Category</h1>

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-// import { useUser } from "./context/UserContext";
+import { useUser } from "./context/UserContext";
 import { usePosts } from "./context/PostContext";
 import Home from "./Home";
 import MainNavbar from "./components/navbar/Navbar";
@@ -14,20 +14,22 @@ import DisplayPost from "./components/blog/DisplayPost";
 
 import { Login } from "./Login"
 import { Logout } from "./Logout"
+import SignUpForm from "./SignUpForm";
 
 import "./App.css";
 
 export default function App() {
-  // const { fetchUser } = useUser() 
-  const { fetchComments } = usePosts()
+  const { user } = useUser() 
+  const { fetchPosts, setPostComment } = usePosts()
 
   useEffect(() => {
-    // fetchUser();
-    fetchComments()
+    fetchPosts()
+    setPostComment(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [user]);
 
-
+  
+  
   return (
     <>
       <MainNavbar />
@@ -41,8 +43,11 @@ export default function App() {
         <Route path="/about" element={<About />} />
         <Route path="/posts/:postId" element={<DisplayPost />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUpForm />} />
         <Route path="/logout" element={<Logout />} />
       </Routes>
     </>
   );
 }
+
+
