@@ -39,18 +39,12 @@ export default function DisplayPost() {
         }
       })
       const result = response.data
-      console.log(result)
+      // console.log(result)
       setAllPostImgs(result)
     } catch (e) {
       console.error(e);
     }
   }
-
-console.log(parseInt(postId))
-console.log(allPostImgs)
-
-
-
 
   useEffect(() => {
     const fetchData = async () => {

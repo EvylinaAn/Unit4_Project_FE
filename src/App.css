@@ -21,3 +21,10 @@ ul {
   max-height: 30vmin;
   max-width: 30vmin;
 }
+
+.lookForm {
+  text-align : left;
+  display : flex;
+  flex-direction: column;
+  width: 30%;
+}
