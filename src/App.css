@@ -17,14 +17,24 @@ ul {
   padding: 0 !important;
 }
 
-.blogImg {
-  max-height: 30vmin;
-  max-width: 30vmin;
+.postTitle {
+  margin: 3vmin auto;
 }
 
-.lookForm {
-  text-align : left;
-  display : flex;
-  flex-direction: column;
-  width: 30%;
+.postCarousel img {
+  height: 25em;
+}
+
+.postContent {
+  width: 80vmin;
+  margin: auto;
+  margin-top: 3vmin;
+}
+
+@media (min-width: 800px) {
+  .postCarousel {
+    width: 50em;
+    height: 25em;
+    margin: auto;
+  }
 }
