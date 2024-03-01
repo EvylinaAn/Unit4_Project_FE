@@ -37,6 +37,39 @@ export function PostsProvider({ children }) {
     },
   ]);
 
+  const [featuredImg, setFeaturedImg] = useState([]);
+  const [allPostImgs, setAllPostImgs] = useState([]);
+
+  const fetchFeaturedImage = async () => {
+    try {
+      const response = await axios.get(`${backendURL}/featuredPhoto`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const result = response.data;
+      // console.log(result)
+      setFeaturedImg(result);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const allPostImages = async () => {
+    try {
+      const response = await axios.get(`${backendURL}/photos`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const result = response.data;
+      // console.log(result)
+      setAllPostImgs(result);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   const fetchPosts = async () => {
     try {
       const response = await axios.get(`${backendURL}/posts`, {
@@ -130,6 +163,12 @@ export function PostsProvider({ children }) {
         fetchComments,
         newPostComment,
         setPostComment,
+        featuredImg, 
+        setFeaturedImg,
+        allPostImgs, 
+        setAllPostImgs,
+        fetchFeaturedImage,
+        allPostImages
       }}
     >
       {children}

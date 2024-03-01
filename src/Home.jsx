@@ -18,7 +18,6 @@ export default function Home() {
     }
   }, [isAuth]);
 
-
   const filteredLooks = looks.filter((look) => look.categories.includes(2));
   console.log(filteredLooks);
 
@@ -31,7 +30,6 @@ export default function Home() {
 
   return (
     <>
-      <h1>Home</h1>
       <div
         style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
       >
@@ -40,12 +38,18 @@ export default function Home() {
             key={index}
             src={look.url}
             alt={`Look ${index + 1}`}
-            style={{ width: "30vmin", height: "50vmin", borderRadius:'10px' }}
+            style={{ width: "30vmin", height: "50vmin", borderRadius: "10px" }}
             onClick={() => handleLookClick(look)}
           />
         ))}
       </div>
+      <div className="strike-through-line">
+        <div className="strike-through-text">Featured</div>
+      </div>
       <FeaturedPosts />
+      <div className="strike-through-line">
+        <div className="strike-through-text">Recent</div>
+      </div>
       <RecentPosts />
       <button>
         {isAuth ? (
@@ -58,4 +62,3 @@ export default function Home() {
     </>
   );
 }
-

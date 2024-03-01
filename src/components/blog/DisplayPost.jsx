@@ -4,49 +4,23 @@ import { Link } from "react-router-dom";
 import { Carousel } from "react-bootstrap";
 import { usePosts } from "../../context/PostContext";
 import { useUser } from "../../context/UserContext";
+import { CgProfile } from "react-icons/cg";
 import Comments from "./Comments";
-import axios from "axios";
 import "./Blog.css";
 
 export default function DisplayPost() {
   const { postId } = useParams();
-  const { singlePost, fetchSinglePost, backendURL } = usePosts();
-  const { current_user } = useUser()
+  const {
+    singlePost,
+    fetchSinglePost,
+    featuredImg,
+    allPostImgs,
+    fetchFeaturedImage,
+    allPostImages,
+  } = usePosts();
+  // const { current_user } = useUser();
 
   const [loading, setLoading] = useState(true);
-
-  const [featuredImg, setFeaturedImg] = useState([]);
-  const [allPostImgs, setAllPostImgs] = useState([]);
-
-  const fetchFeaturedImage = async () => {
-    try {
-      const response = await axios.get(`${backendURL}/featuredPhoto`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const result = response.data;
-      // console.log(result)
-      setFeaturedImg(result);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  const allPostImages = async () => {
-    try {
-      const response = await axios.get(`${backendURL}/photos`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const result = response.data;
-      // console.log(result)
-      setAllPostImgs(result);
-    } catch (e) {
-      console.error(e);
-    }
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,6 +33,13 @@ export default function DisplayPost() {
     fetchFeaturedImage();
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const [isAuth, setIsAuth] = useState(false)
+
+  useEffect(() => {
+    if (localStorage.getItem('access_token') !== null) 
+      setIsAuth(true)
+  }, [isAuth])
 
   return (
     <div>
@@ -94,21 +75,24 @@ export default function DisplayPost() {
                 )
             )}
           </Carousel>
-          <div dangerouslySetInnerHTML={{ __html: singlePost.content }} className="postContent"/>
+          <div
+            dangerouslySetInnerHTML={{ __html: singlePost.content }}
+            className="postContent"
+          />
         </>
       )}
-      {/* <Link to="/login">
-        <button className="btn btn-outline-secondary btn-sm">Login</button>
-      </Link>
-      <Link to="/logout">
-        <button className="btn btn-outline-secondary btn-sm">Logout</button>
-      </Link> */}
-      <Link to="/login">
-  <button className="btn btn-outline-secondary btn-sm">
-    {current_user ? "Logout" : "Login"}
-  </button>
-</Link>
+      <br />
       <hr />
+      <div className="commentLogin">
+        <h5>Comments</h5>
+        <Link to="/logout" className="commentloginLink">
+          <CgProfile className="commentLoginIcon" />
+          <button className="btn btn-outline-secondary btn-sm commentLoginBtn ">
+            {isAuth ? "Logout" : "Login"}
+          </button>
+        </Link>
+      </div>
+      <hr style={{ marginTop: "0" }} />
       <div>
         <Comments postId={postId} />
       </div>

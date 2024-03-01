@@ -3,7 +3,7 @@ import { usePosts } from "../../context/PostContext";
 import { Link } from "react-router-dom";
 
 export default function Category() {
-  const { posts, fetchPosts } = usePosts();
+  const { posts, fetchPosts, allPostImgs, featuredImg } = usePosts();
 
   useEffect(() => {
     fetchPosts();
@@ -11,29 +11,70 @@ export default function Category() {
   }, []);
 
   // const allPosts = posts.map(post => post.title)
-// console.log(posts)
+  // console.log(posts)
   return (
-    <>
-      <h1>Category</h1>
-      <ul>
+    <div style={{ marginBottom: "10vmin" }}>
+      {/* <h1>Category</h1> */}
+      <ul className="catUL mx-5 py-3">
         <li>
-          <a href="/travel">Travel</a>
+          <img
+            src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="random travel img"
+          />
+          <div className="ulText">
+            <a href="/travel">Travel</a>
+          </div>
         </li>
         <li>
-          <a href="/fashion">Fashion and Lifestyle</a>
+          <img
+            src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="random fashion img"
+          />
+          <div className="ulText">
+            <a href="/fashion">Fashion and Lifestyle</a>
+          </div>
         </li>
         <li>
-          <a href="/beauty">Beauty</a>
+          <img
+            src="https://images.unsplash.com/photo-1526045478516-99145907023c?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="random beauty img"
+          />
+          <div className="ulText">
+            <a href="/beauty">Beauty</a>
+          </div>
         </li>
       </ul>
-      <ul>
-        {posts.map((post, index) => (
-          // <li key={index}>{post}</li>
-          <Link to={`/posts/${post.id}`} key={index}>
-          <li>{post.title}</li>
-        </Link>
-        ))}
-      </ul>
-    </>
+
+      <div className="strike-through-line">
+        <div className="strike-through-text">All Posts</div>
+      </div>
+
+      {posts.map((post, index) => (
+        <div key={index} className="DisplayPostZigZag py-3 mx-5">
+          <>
+            {featuredImg && featuredImg.length > 0 && (
+              <>
+                {featuredImg.map(
+                  (img) =>
+                    img.post === post.id && (
+                      <img
+                        key={img.id}
+                        src={img.url}
+                        alt="Featured"
+                        className=""
+                      />
+                    )
+                )}
+                <h2 style={{ margin: "auto" }}>
+                  <Link to={`/posts/${post.id}`}>
+                    <h2>{post.title}</h2>
+                  </Link>
+                </h2>
+              </>
+            )}
+          </>
+        </div>
+      ))}
+    </div>
   );
 }
