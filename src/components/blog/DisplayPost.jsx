@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Carousel } from "react-bootstrap";
 import { usePosts } from "../../context/PostContext";
-import { useUser } from "../../context/UserContext";
 import { CgProfile } from "react-icons/cg";
 import Comments from "./Comments";
 import "./Blog.css";
@@ -18,7 +17,6 @@ export default function DisplayPost() {
     fetchFeaturedImage,
     allPostImages,
   } = usePosts();
-  // const { current_user } = useUser();
 
   const [loading, setLoading] = useState(true);
 
