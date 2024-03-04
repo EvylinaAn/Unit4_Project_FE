@@ -15,7 +15,7 @@ export default function BeautyIndex() {
   .map(post => post);
 
   return (
-    <div style={{margin:"auto", maxWidth:"90%"}}>
+    <div style={{margin:"auto", maxWidth:"90%", marginBottom:"10vmin"}}>
       <h1>Beauty</h1>
       {beautyPosts.map((post, index) => (
       <div key={index} className="DisplayPostZigZag py-3">
@@ -32,6 +32,7 @@ export default function BeautyIndex() {
                     (img) =>
                       img.post === post.id && (
                         <img
+                        style={{height: "30em"}}
                           key={img.id}
                           src={img.url}
                           alt="Featured"
@@ -50,6 +51,7 @@ export default function BeautyIndex() {
                     (img) =>
                       img.post === post.id && (
                         <img
+                        style={{height: "30em"}}
                           key={img.id}
                           src={img.url}
                           alt="Featured"

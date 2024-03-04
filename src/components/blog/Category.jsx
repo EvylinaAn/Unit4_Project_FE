@@ -3,7 +3,7 @@ import { usePosts } from "../../context/PostContext";
 import { Link } from "react-router-dom";
 
 export default function Category() {
-  const { posts, fetchPosts, allPostImgs, featuredImg } = usePosts();
+  const { posts, fetchPosts, featuredImg } = usePosts();
 
   useEffect(() => {
     fetchPosts();
@@ -58,6 +58,7 @@ export default function Category() {
                   (img) =>
                     img.post === post.id && (
                       <img
+                      style={{height: "50em"}}
                         key={img.id}
                         src={img.url}
                         alt="Featured"

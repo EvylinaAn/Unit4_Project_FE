@@ -4,6 +4,8 @@ import { useLooks } from "./context/LookContext";
 import FeaturedPosts from "./components/blog/FeaturedPosts";
 import RecentPosts from "./components/blog/RecentPosts";
 import LookModal from "./components/looks/LookModal";
+import { AiOutlineVerticalLeft } from "react-icons/ai";
+
 
 import { Link } from "react-router-dom";
 
@@ -29,9 +31,9 @@ export default function Home() {
   }, []);
 
   return (
-    <>
+    <div style={{marginBottom:'10vmin', marginTop: "10vmin"}}>
       <div
-        style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
+        style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", marginBottom: "10vmin"}}
       >
         {filteredLooks.slice(0, 3).map((look, index) => (
           <img
@@ -51,14 +53,15 @@ export default function Home() {
         <div className="strike-through-text">Recent</div>
       </div>
       <RecentPosts />
-      <button>
-        {isAuth ? (
-          <Link to="/logout">Logout</Link>
-        ) : (
-          <Link to="/login">Login</Link>
-        )}
+      <button className="btn">
+        {/* {isAuth ? ( */}
+          {/* <Link to="/logout">Logout</Link> */}
+        {/* ) : ( */}
+          <Link to="/category" style={{fontSize: '20px'}}>View All <AiOutlineVerticalLeft />
+</Link>
+        {/* )} */}
       </button>
       <LookModal />
-    </>
+    </div>
   );
 }

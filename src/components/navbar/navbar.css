@@ -1,14 +1,15 @@
 .my-nav {
     opacity: 1;
-    background-color: rgb(188, 183, 182) !important;
+    background-color: rgb(188, 183, 182, 0.4) !important;
 }
 
 .navbar-brand, .navbarLinks{
-    color: rgb(74, 62, 53) !important;
+    color: black!important;
 }
 
 .navbarLinks {
     margin-left: 10px;
+    color: black!important;
 }
 
 #basic-navbar-nav {

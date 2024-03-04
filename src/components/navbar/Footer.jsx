@@ -9,7 +9,7 @@ import { FaPinterestP } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <Navbar bg="light" data-bs-theme="light" className="fixed-bottom">
+    <Navbar style={{backgroundColor:" rgb(228, 226, 226) "}} className="fixed-bottom">
       <Container>
         <Nav className="me-auto justify-content-around w-100">
           <Nav.Link target='_blank' href="mailto: thatfashiontale@gmail.com">

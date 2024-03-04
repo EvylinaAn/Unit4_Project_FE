@@ -16,10 +16,10 @@ export default function MainNavbar() {
         <Navbar.Brand href="/">That Fashion Tale</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="navbarLinks">
-            <Nav.Link href="/looks">Looks</Nav.Link>
+          <Nav className="navbarLinks" style={{color:'black'}}>
+            <Nav.Link href="/looks" >Looks</Nav.Link>
             <NavDropdown title="Blogs" id="basic-nav-dropdown" style={{ paddingLeft: '1.9vmin'}}>
-              <NavDropdown.Item href="/category">Collection</NavDropdown.Item>
+              <NavDropdown.Item href="/category" style={{color:'black !important'}}>Collection</NavDropdown.Item>
               <NavDropdown.Item href="/travel">Travel</NavDropdown.Item>
               <NavDropdown.Item href="/fashion">Fasihon & Lifestyle</NavDropdown.Item>
               <NavDropdown.Item href="/beauty">Beauty</NavDropdown.Item>
@@ -31,7 +31,7 @@ export default function MainNavbar() {
             </NavDropdown>
             <Nav.Link style={{ paddingLeft: '2vmin'}} href="/about">About</Nav.Link>
           </Nav>
-          <Nav>
+          {/* <Nav>
           {isAuth ? (
             <Nav.Link href="/logout">Logout</Nav.Link>
           ) : (
@@ -40,7 +40,7 @@ export default function MainNavbar() {
               <Nav.Link href="/signup">SignUp</Nav.Link>
             </>
           )} 
-        </Nav>
+        </Nav> */}
         </Navbar.Collapse>
       </Container>
     </Navbar>

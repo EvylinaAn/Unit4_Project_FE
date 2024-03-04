@@ -16,31 +16,9 @@ export default function TravelIndex() {
   .map(post => post);
 
   return (
-    <div style={{margin:"auto", maxWidth:"90%"}}>
+    <div style={{margin:"auto", maxWidth:"90%", marginBottom:"10vmin"}}>
       {/* <h1>Travel</h1> */}
       {travelPosts.map((post, index) => (
-        // <div key={index}>
-        // <h2>
-        //   <Link to={`/posts/${post.id}`}>
-        //     <h2>{post.title}</h2>
-        //   </Link>
-        // </h2>
-        // {featuredImg && featuredImg.length > 0 && (
-        //         <>
-        //           {featuredImg.map(
-        //             (img) =>
-        //               img.post === post.id && (
-        //                 <img
-        //                   key={img.id}
-        //                   src={img.url}
-        //                   alt="Featured"
-        //                   className=""
-        //                 />
-        //               )
-        //           )}
-        //         </>
-        //       )}
-        // </div>  
         <div key={index} className="DisplayPostZigZag py-3">
           {(index % 2 === 1) ? (
             <>
@@ -55,6 +33,7 @@ export default function TravelIndex() {
                     (img) =>
                       img.post === post.id && (
                         <img
+                        style={{height: "30em"}}
                           key={img.id}
                           src={img.url}
                           alt="Featured"
@@ -73,6 +52,7 @@ export default function TravelIndex() {
                     (img) =>
                       img.post === post.id && (
                         <img
+                        style={{height: "30em"}}
                           key={img.id}
                           src={img.url}
                           alt="Featured"

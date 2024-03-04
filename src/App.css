@@ -10,6 +10,19 @@ body {
 a {
   text-decoration: none !important;
   color: gray !important;
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+a:hover {
+  color: purple !important;
+}
+
+h2 {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 300;
+  font-style: italic;
 }
 
 ul {
@@ -39,7 +52,8 @@ ul {
   color: #000000;
   border-color: #000000;
   border-top: 1px solid #111;
-  margin-top: 28px;
+  margin-top: 5vmin;
+  margin-bottom: 5vmin;
 }
 
 .strike-through-text {

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Card} from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { useUser } from "../../context/UserContext";
 import { useLooks } from "../../context/LookContext";
 import LookModal from "./LookModal";
@@ -22,13 +22,19 @@ export default function Looks() {
   }, []);
 
   return (
-    <>
+    <div style={{ marginBottom: "10vmin" }}>
       <h1>Looks</h1>
       {parseInt(current_user) === 1 && (
         <form
           onSubmit={handleSubmit}
           className="lookForm"
-          style={{ margin: "auto", border: "0.2px solid black" }}
+          style={{
+            margin: "auto",
+            border: "0.2px solid black",
+            display: "flex",
+            flexDirection: "column",
+            width: "30%",
+          }}
         >
           <input
             type="file"
@@ -81,6 +87,6 @@ export default function Looks() {
         ))}
       </div>
       <LookModal />
-    </>
+    </div>
   );
 }

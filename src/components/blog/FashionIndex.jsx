@@ -16,7 +16,7 @@ export default function FashionIndex() {
   .map(post => post);
 
   return (
-    <div style={{margin:"auto", maxWidth:"90%"}}>
+    <div style={{margin:"auto", maxWidth:"90%", marginBottom:"10vmin"}}>
       <h1>Fashion</h1>
       {fashionPosts.map((post, index) => (
         <div key={index} className="DisplayPostZigZag py-3">
@@ -33,6 +33,7 @@ export default function FashionIndex() {
                   (img) =>
                     img.post === post.id && (
                       <img
+                      style={{height: "30em"}}
                         key={img.id}
                         src={img.url}
                         alt="Featured"
@@ -51,6 +52,7 @@ export default function FashionIndex() {
                   (img) =>
                     img.post === post.id && (
                       <img
+                      style={{height: "30em"}}
                         key={img.id}
                         src={img.url}
                         alt="Featured"
