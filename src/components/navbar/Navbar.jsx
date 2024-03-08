@@ -31,7 +31,7 @@ export default function MainNavbar() {
             </NavDropdown>
             <Nav.Link style={{ paddingLeft: '2vmin'}} href="/about">About</Nav.Link>
           </Nav>
-          {/* <Nav>
+          <Nav>
           {isAuth ? (
             <Nav.Link href="/logout">Logout</Nav.Link>
           ) : (
@@ -40,7 +40,7 @@ export default function MainNavbar() {
               <Nav.Link href="/signup">SignUp</Nav.Link>
             </>
           )} 
-        </Nav> */}
+        </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
