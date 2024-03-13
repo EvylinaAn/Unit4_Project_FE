@@ -32,7 +32,6 @@ export default function Comments({ postId }) {
 
   useEffect(() => {
     if (localStorage.getItem("access_token") !== null) setIsAuth(true);
-    // (async () => fetchAllComments())();
     (async () => fetchComments())();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -48,7 +47,6 @@ export default function Comments({ postId }) {
         },
       });
       setComments(response.data);
-      // return response.data;
     } catch (error) {
       console.error("Error fetching comments:", error);
     }

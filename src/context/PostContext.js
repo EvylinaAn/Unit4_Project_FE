@@ -9,7 +9,6 @@ export function usePosts() {
 
 export function PostsProvider({ children }) {
   const backendURL = process.env.REACT_APP_BACKEND_URL;
-  // const { postId } = useParams();
 
   const [posts, setPosts] = useState([
     {
@@ -17,10 +16,6 @@ export function PostsProvider({ children }) {
       content: "",
     },
   ]);
-
-  // const [featuredImg, setFeaturedImg] = useState([{
-  //   url: "",
-  // }])
 
   const [comments, setComments] = useState([]);
   const [newPostComment, setPostComment] = useState(false);
@@ -48,7 +43,6 @@ export function PostsProvider({ children }) {
         },
       });
       const result = response.data;
-      // console.log(result)
       setFeaturedImg(result);
     } catch (e) {
       console.error(e);
@@ -63,7 +57,6 @@ export function PostsProvider({ children }) {
         },
       });
       const result = response.data;
-      // console.log(result)
       setAllPostImgs(result);
     } catch (e) {
       console.error(e);
@@ -74,32 +67,17 @@ export function PostsProvider({ children }) {
     try {
       const response = await axios.get(`${backendURL}/posts`, {
         headers: {
-          // Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           "Content-Type": "application/json",
         },
       });
 
       const result = response.data;
-      // console.log(result)
       setPosts(result);
     } catch (e) {
       console.error(e);
     }
   };
 
-  // const fetchFeaturedImage = async () => {
-  //   try {
-  //     const response = await axios.get(`${backendURL}/featuredPhoto`, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       }
-  //     })
-  //     const result = response.data
-  //     console.log(result)
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // }
 
   const fetchSinglePost = async (postId) => {
     try {
@@ -122,7 +100,6 @@ export function PostsProvider({ children }) {
           post: postId,
         },
         headers: {
-          // Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           "Content-Type": "application/json",
         },
       });
@@ -136,7 +113,6 @@ export function PostsProvider({ children }) {
     try {
       const response = await axios.get(`${backendURL}/categories`, {
         headers: {
-          // Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           "Content-Type": "application/json",
         },
       });

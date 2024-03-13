@@ -2,7 +2,7 @@
 import axios from "axios";
 import { useState } from "react";
 // import { useUser } from "./context/UserContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // Define the Login function.
 export const Login = () => {
   // const { username, setUsername, password, setPassword, submit } = useUser()
@@ -102,6 +102,9 @@ export const Login = () => {
             <button type="submit" className="btn btn-primary">
               Submit
             </button>
+            <Link to="/signup">
+              <button className="btn btn-outline-secondary btn-sm">Sign Up</button>
+            </Link>
           </div>
         </div>
       </form>
